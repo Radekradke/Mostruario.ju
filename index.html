@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> Ju — Acessorios </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <h1>Ju-Acessorios</h1>
+        <span>Bijuterias</span>
+      </div>
+      <div class="header-badge">✦ Coleção Exclusiva 2025</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2>
+      Elegância que Transcende
+      <strong>Cada Detalhe Conta</strong>
+    </h2>
+    <div class="divider"></div>
+    <p>
+     Criações únicas que traduzem elegância e personalidade. 
+     Cada peça é pensada para realçar sua beleza 
+     e transformar cada momento em um toque de brilho e estilo.
+    </p>
+  </section>
+
+  <main class="wrap">
+    <section class="grid" id="grid">
+      <!-- Cards gerados via JavaScript -->
+    </section>
+  </main>
+
+  <div class="modal-back" id="modalBack" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <strong id="modalTitle">Produto</strong>
+        <button class="close" id="closeBtn">Fechar</button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="modal-img-container">
+            <img id="modalImg" src="" alt="">
+          </div>
+          <div class="modal-info">
+            <p id="modalDesc">Descrição</p>
+            <p id="modalPrice">R$ 0,00</p>
+            <div class="modal-actions">
+              <button class="btn-modal wpp" id="modalWpp">
+                💎 Solicitar via WhatsApp
+              </button>
+              <button class="btn-modal details" id="modalMore">
+                Ver Mais Detalhes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>✦ Brisa Joias — Onde a beleza encontra a autenticidade ✦</p>
+    <small>Mostruário Digital • Entre em contato pelo WhatsApp</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
