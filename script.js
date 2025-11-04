@@ -12,7 +12,11 @@ const modalImg = document.getElementById('modalImg');
 const modalDesc = document.getElementById('modalDesc');
 const modalPrice = document.getElementById('modalPrice');
 const modalWpp = document.getElementById('modalWpp');
+const modalMore = document.getElementById('modalMore');
 const closeBtn = document.getElementById('closeBtn');
+
+// Variável para controlar o estado do zoom
+let isZoomed = false;
 
 /* Helper: tenta carregar products.json do servidor (se houver).
    Se não existir, cai para o array gerado automaticamente.
@@ -48,6 +52,26 @@ function waLink(phone, text) {
   return `https://wa.me/${phone}?text=${t}`;
 }
 
+// Função para ativar/desativar zoom na imagem
+function toggleImageZoom() {
+  const imgContainer = document.querySelector('.modal-img-container');
+  const img = document.getElementById('modalImg');
+  
+  if (!isZoomed) {
+    // Ativar zoom
+    imgContainer.classList.add('zoomed');
+    img.style.cursor = 'zoom-out';
+    modalMore.textContent = '🔍 Voltar ao Normal';
+    isZoomed = true;
+  } else {
+    // Desativar zoom
+    imgContainer.classList.remove('zoomed');
+    img.style.cursor = 'zoom-in';
+    modalMore.textContent = 'Ver Mais Detalhes';
+    isZoomed = false;
+  }
+}
+
 // render da grade com paginação e suporte a sold:true
 function renderGrid(PRODUCTS) {
   grid.innerHTML = '';
@@ -76,13 +100,17 @@ function renderGrid(PRODUCTS) {
         </div>
         <div class="price">${priceText}<small>/unidade</small></div>
         <div class="actions">
-          <button class="btn details" data-id="${p.id}">Ver Detalhes</button>
-          <button class="btn wpp" data-id="${p.id}" ${p.sold ? 'disabled aria-disabled="true"' : ''}>💎 Pedir</button>
+          <button class="btn details" data-id="${p.id}" ${p.sold ? 'disabled aria-disabled="true"' : ''}>Ver Detalhes</button>
+          <button class="btn wpp" data-id="${p.id}" ${p.sold ? 'disabled aria-disabled="true"' : ''}>Pedir</button>
         </div>
       </div>
     `;
     // se esgotado, estilizamos um pouco diferente no card para visual
-    if (p.sold) c.style.opacity = '0.7';
+    if (p.sold) {
+      c.style.opacity = '0.6';
+      c.style.pointerEvents = 'none';
+      c.style.cursor = 'not-allowed';
+    }
 
     grid.appendChild(c);
   });
@@ -123,7 +151,7 @@ function renderPagination(PRODUCTS) {
   };
 
   const info = document.createElement('span');
-  info.style.color = '#fff';
+  info.style.color = '#666';
   info.style.margin = '0 20px';
   info.textContent = `Página ${currentPage} de ${totalPages}`;
 
@@ -144,32 +172,68 @@ function attachGridEvents(PRODUCTS) {
     const product = PRODUCTS.find(x => x.id === id);
     if (!product) return;
 
+    // Bloquear interação se produto esgotado
+    if (product.sold) {
+      return;
+    }
+
     if (btn.classList.contains('wpp')) {
       const pageUrl = location.href.split('#')[0];
-      const msg = `Olá *${COMPANY_NAME}*! 💎\n\nTenho interesse em:\n\n✦ *${product.title}*\n💰 ${product.price}\n\n🔗 Mostruário: ${pageUrl}`;
+      const msg = `Olá *${COMPANY_NAME}*! \n\nTenho interesse em:\n\n *${product.title}*\n ${product.price}\n\n Mostruário: ${pageUrl}`;
       window.open(waLink(WHATSAPP_NUMBER, msg), '_blank');
     } else {
+      // Reset zoom state ao abrir modal
+      isZoomed = false;
       modalTitle.textContent = product.title;
       modalImg.src = product.img;
       modalImg.alt = product.title;
+      modalImg.style.cursor = 'zoom-in';
       modalDesc.textContent = product.desc;
       modalPrice.textContent = product.price;
+      modalMore.textContent = 'Ver Mais Detalhes';
       modalBack.style.display = "flex";
+      
+      // Remover classe zoomed se existir
+      document.querySelector('.modal-img-container').classList.remove('zoomed');
 
-      // configurar botão do modal (respeita sold)
-      modalWpp.disabled = !!product.sold;
+      // configurar botão do modal
+      modalWpp.disabled = false;
       modalWpp.onclick = () => {
         const pageUrl = location.href.split('#')[0];
-        const msg = `Olá *${COMPANY_NAME}*! 💎\n\nGostaria de saber mais sobre:\n\n✦ *${product.title}*\n${product.subtitle}\n💰 ${product.price}\n\n📋 ${product.desc}\n\n🔗 Link: ${pageUrl}`;
+        const msg = `Olá *${COMPANY_NAME}*! \n\nGostaria de saber mais sobre:\n\n *${product.title}*\n${product.subtitle}\n ${product.price}\n\n ${product.desc}\n\n🔗 Link: ${pageUrl}`;
         window.open(waLink(WHATSAPP_NUMBER, msg), '_blank');
       };
+      
+      // Configurar botão "Ver Mais Detalhes" para dar zoom
+      modalMore.onclick = toggleImageZoom;
+      
+      // Também permitir clicar na imagem para dar zoom
+      modalImg.onclick = toggleImageZoom;
     }
   });
 
   // fechar modal
-  closeBtn.addEventListener('click', () => modalBack.style.display = 'none');
-  modalBack.addEventListener('click', (e) => { if (e.target === modalBack) modalBack.style.display = 'none'; });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modalBack.style.display = 'none'; });
+  closeBtn.addEventListener('click', () => {
+    modalBack.style.display = 'none';
+    isZoomed = false;
+    document.querySelector('.modal-img-container').classList.remove('zoomed');
+  });
+  
+  modalBack.addEventListener('click', (e) => {
+    if (e.target === modalBack) {
+      modalBack.style.display = 'none';
+      isZoomed = false;
+      document.querySelector('.modal-img-container').classList.remove('zoomed');
+    }
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalBack.style.display === 'flex') {
+      modalBack.style.display = 'none';
+      isZoomed = false;
+      document.querySelector('.modal-img-container').classList.remove('zoomed');
+    }
+  });
 }
 
 // inicializa: carrega produtos e renderiza
