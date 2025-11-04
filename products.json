@@ -1,10 +1,10 @@
 [
-  {"id":"p1","title":"Produto 1","subtitle":"Acessório Exclusivo","price":"","img":"images/produto1.jpeg","desc":"Descrição do Produto 1.","badge":"Novo","sold":false},
+  {"id":"p1","title":"Cordão de prata","subtitle":"Conjunto,cordão","price":"R$ 28","img":"images/produto1.jpeg","desc":"Cordão de prata n12, com detalhamento nas pontas e um toque de elegancia.","badge":"Exclusivo","sold":false},
   {"id":"p2","title":"Produto 2","subtitle":"Acessório Exclusivo","price":"","img":"images/produto2.jpeg","desc":"Descrição do Produto 2.","badge":"Novo","sold":true},
   {"id":"p3","title":"Produto 3","subtitle":"Acessório Exclusivo","price":"","img":"images/produto3.jpeg","desc":"Descrição do Produto 3.","badge":"Novo","sold":false},
   {"id":"p4","title":"Produto 4","subtitle":"Acessório Exclusivo","price":"","img":"images/produto4.jpeg","desc":"Descrição do Produto 4.","badge":"Novo","sold":false},
   {"id":"p5","title":"Produto 5","subtitle":"Acessório Exclusivo","price":"","img":"images/produto5.jpeg","desc":"Descrição do Produto 5.","badge":"Novo","sold":false},
-  {"id":"p6","title":"Produto 6","subtitle":"Acessório Exclusivo","price":"","img":"images/produto6.jpeg","desc":"Descrição do Produto 6.","badge":"Novo","sold":false},
+  {"id":"p6","title":"Produto 6","subtitle":"Acessório Exclusivo","price":"32","img":"images/produto6.jpeg","desc":"Descrição do Produto 6.","badge":"Novo","sold":false},
   {"id":"p7","title":"Produto 7","subtitle":"Acessório Exclusivo","price":"","img":"images/produto7.jpeg","desc":"Descrição do Produto 7.","badge":"Coleção","sold":false},
   {"id":"p8","title":"Produto 8","subtitle":"Acessório Exclusivo","price":"","img":"images/produto8.jpeg","desc":"Descrição do Produto 8.","badge":"Coleção","sold":false},
   {"id":"p9","title":"Produto 9","subtitle":"Acessório Exclusivo","price":"","img":"images/produto9.jpeg","desc":"Descrição do Produto 9.","badge":"Coleção","sold":false},
