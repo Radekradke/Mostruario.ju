@@ -343,9 +343,9 @@ header {
 }
 
 .price {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', serif;
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 200;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -536,9 +536,9 @@ header {
 }
 
 #modalPrice {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', serif;
   font-size: 46px;
-  font-weight: 700;
+  font-weight: 200;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -693,6 +693,115 @@ footer small {
   text-transform: uppercase;
 }
 
+/* Estilos para Zoom da Imagem */
+.modal-img-container {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: zoom-in;
+}
+
+.modal-img-container.zoomed {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.8);
+  width: 90vw;
+  height: 90vh;
+  max-width: 1200px;
+  max-height: 900px;
+  z-index: 1001;
+  box-shadow: 
+    0 40px 100px rgba(162, 6, 33, 0.3),
+    0 0 0 4px var(--primary);
+  cursor: zoom-out;
+}
+
+.modal-img-container.zoomed #modalImg {
+  object-fit: contain;
+  cursor: zoom-out;
+}
+
+/* Overlay escuro quando zoom está ativo */
+.modal-back:has(.modal-img-container.zoomed) {
+  background: rgba(10, 10, 10, 0.95);
+}
+
+/* Esconder outros elementos do modal durante zoom */
+.modal-back:has(.modal-img-container.zoomed) .modal-info,
+.modal-back:has(.modal-img-container.zoomed) .modal-header {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Animação suave */
+#modalImg {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Indicador visual de zoom disponível */
+.modal-img-container:not(.zoomed):hover {
+  transform: scale(1.02);
+}
+
+.modal-img-container:not(.zoomed):hover::after {
+  content: '🔍 Clique para ampliar';
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(162, 6, 33, 0.95);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  animation: fadeInZoomHint 0.3s ease forwards;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+@keyframes fadeInZoomHint {
+  to { opacity: 1; }
+}
+
+/* Estilos para Cards Esgotados */
+.card[style*="pointer-events: none"] {
+  filter: grayscale(50%);
+  position: relative;
+}
+
+.card[style*="pointer-events: none"]::after {
+  content: 'ESGOTADO';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  background: rgba(162, 6, 33, 0.9);
+  color: white;
+  padding: 15px 50px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.card[style*="pointer-events: none"] .btn {
+  background: #999 !important;
+  cursor: not-allowed !important;
+  opacity: 0.5;
+}
+
+.card[style*="pointer-events: none"]:hover {
+  transform: none !important;
+  box-shadow: 
+    0 8px 32px rgba(162, 6, 33, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
 /* Responsividade */
 @media(max-width: 968px) {
   .header-right {
